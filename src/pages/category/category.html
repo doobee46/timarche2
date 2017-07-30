@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Category</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <button ion-item class="modal" *ngFor="let category of categories" (click)="CategorySelected(category)">
+      {{ category.name }}
+      <ion-icon name="checkmark-circle" color="secondary" item-end *ngIf="category.id == currentCategory"></ion-icon>
+    </button>
+  </ion-list>
+</ion-content>
+

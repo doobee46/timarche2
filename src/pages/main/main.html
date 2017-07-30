@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="postListing()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+       <ion-icon name="notifications"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button  menuToggle icon-only>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar class="location" color="snowish">
+    <button ion-button clear icon-right color="secondary" (click)="browseCategory()">
+      {{categoryName | uppercase}}
+      <ion-icon name="arrow-dropdown"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button clear color="secondary" icon-start (click)="openFavorites()" class="btn-txt">
+        <ion-icon name="bookmark"></ion-icon>
+        Favs
+      </button>
+      <button ion-button clear color="secondary" icon-right (click)="openLocation($event)" class="btn-txt">
+          {{selectedCity}}
+        <ion-icon class="drop" name="arrow-dropdown"></ion-icon>
+      </button>
+    </ion-buttons>
+ </ion-toolbar>
+</ion-header>
+
+<ion-content class="main-content" >
+ <div class="main-table">
+  <ion-card *ngFor="let product of products">
+    <div class="image-bar"></div>
+    <div class="list-image">
+      <img src= 'assets/img/{{product.title}}.jpg' />
+    </div>
+
+    <div class="card-title" (click)="showDetails(product.id,product.title,product.description,product.views,product.flag)">{{product.title}}</div>
+    
+    <div class="card-subtitle">     
+      {{product.price}} gdes   
+    </div>
+
+    <div class="flag" *ngIf="product.flag === true">
+      New
+    </div>
+
+    <div class="views">
+      <ion-icon name ="eye"></ion-icon>
+      {{product.views}} views
+    </div>
+
+    <div *ngIf="favorites.indexOf(product.id) == '-1'; then fav else remove"></div>
+
+    <ng-template #fav>
+      <button class ="btn-star" ion-button outline medium color="secondary" icon-only (click)="favs(product.id)">
+        <ion-icon name ="bookmark"></ion-icon>
+      </button>
+    </ng-template>
+
+    <ng-template #remove>
+      <button  class ="btn-star" ion-button medium color="dark-green" icon-only (click)="removeFavorite(product.id)">
+        <ion-icon name='bookmark'color="secondary"></ion-icon>
+      </button>
+    </ng-template>
+
+  </ion-card>
+
+ </div>
+<!--  <ion-fab right bottom>
+    <button ion-fab color="primary"><ion-icon name="camera"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab><ion-icon name="images"></ion-icon></button>
+      <button ion-fab><ion-icon name="camera"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>-->
+
+</ion-content>
+

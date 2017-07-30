@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{title | uppercase }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="details">
+  <div class="product-image">
+    <img src="assets/img/{{title}}.jpg" class="tinted">
+  </div>
+
+   <ion-card padding >
+    <h4>Product Description</h4>
+    <p>{{description}}</p>
+  </ion-card>
+
+  <div id="screenslider" padding>
+  <h5>More images</h5>
+  <ion-slides class="image-slider" loop="true" slidesPerView="2">
+    <ion-slide *ngFor="let img of images">
+      <img src="assets/img/{{img}}" class="thumb-img" imageViewer/>
+    </ion-slide>
+  </ion-slides>
+    <!--<ion-scroll scrollX="true" class="item">
+     <ion-row [style.width]="game.screenshots.length+'00%'">
+        <ion-col *ngFor="let screenshot of game.screenshots">
+          <img src="assets/img/computerjpg">
+        </ion-col>
+      </ion-row>
+    </ion-scroll>-->
+  </div>
+  <div id="popover">
+    <button ion-button full color="primary">Send Message to Seller</button>
+    <button ion-button full color="secondary">Make an offer</button>
+    <!--<ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <h4>Rating</h4>
+          <p class="larger-res"></p>
+        </ion-col>
+        <ion-col col-6>
+          <h4>Perspective</h4>
+          <p></p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <h4>Website</h4>
+          <button ion-button (click)="launchSite(game.websites[0].url)" small>Visit</button>
+        </ion-col>
+        <ion-col col-6>
+          <h4>Release date</h4>
+          <p></p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>-->
+  </div>
+  
+</ion-content>

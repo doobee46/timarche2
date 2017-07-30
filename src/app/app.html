@@ -1,1 +1,43 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!-- this menu section should hold what content and destine to where
+// at what point in time?
+// That is determined by the last line in this -->
+<ion-menu [content]="content">
+ 
+<!-- The side menu title-->
+<!--<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+  <ion-content class="content-side">
+    <ion-list>
+        <ion-item>
+            <ion-avatar item-start>
+            <img src="assets/img/128.jpg">
+            </ion-avatar>
+            <span>login as</span>
+            <h3>{{loggedInUser}}</h3>
+            <h3 class="member">Member since 2013</h3>
+        </ion-item>
+    </ion-list>
+   <div padding> 
+   <ion-list inset class="side-list">    
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)" class="side-menu">
+        {{p.title}}
+      </button>
+      <!--<button  (click)="addToPlaylist()" class="listbtn" ion-item>
+       Playlists
+       <ion-icon ios="ios-add" md="md-add" ></ion-icon>
+      </button>-->
+      <button  class="listbtn" ion-item (click)="signOut()">
+        Sign Out
+      </button>
+  </ion-list>
+   </div>
+    
+  </ion-content>
+ 
+</ion-menu>
+<!-- What's my root? remember the this.rootPage?-->
+<ion-nav id="nav" [root]="rootPage" #content swipeBackEnabled="false" ></ion-nav>
+

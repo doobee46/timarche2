@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+      Product Listing form
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="closeModal()">
+        <ion-icon item-right name="ios-close-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content padding>
+    <ion-list>
+        <ion-item>
+           Publish a listing
+        </ion-item>
+         
+        <ion-item>
+           <ion-label fixed>Name</ion-label>
+            <ion-input type="text" [value]="name" (input)="name = $event.target.value"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label fixed>Description</ion-label>
+            <ion-input type="text" [value]="description" (input)="description = $event.target.value"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Price</ion-label>
+            <ion-input type="text" [value]="price" (input)="price= $event.target.value"></ion-input>
+        </ion-item>
+        
+    </ion-list>
+
+  <button ion-button (click)="postNewListing" color="warning">Post Item</button>
+  <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
+  <h3 [hidden]="lastImage !== null">Please Select Image!</h3>
+</ion-content>
+ 
+<ion-footer>
+  <!--<ion-toolbar color="primary">
+    <ion-buttons>
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>Select Image
+      </button>
+      <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null">
+        <ion-icon name="cloud-upload"></ion-icon>Upload
+      </button>
+    </ion-buttons>
+  </ion-toolbar>-->
+</ion-footer>

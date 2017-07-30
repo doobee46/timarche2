@@ -1,0 +1,98 @@
+.signup{
+    @include bgcolor;
+    .brand{
+      margin-top:60px;
+      img{
+        width:60px;
+        height: auto;
+        margin:auto;
+        display:block;
+      }
+      p{
+         text-align: center;
+         font-family:"roboto";
+         letter-spacing: 1px;
+         color:#fff;
+      }
+    }
+
+    .log-inputs{
+      ion-item{
+          background: transparent;
+          ion-label{
+              color:#fff !important;
+              letter-spacing: 1px;
+              font-family: "roboto";
+              opacity:0.7;
+          }
+          ion-input{
+              input.text-input.text-input-md{
+                  color:#fff !important;
+                  font-family: "roboto";
+                  letter-spacing: 1px;
+                  font-weight: 300;
+                  position: relative;
+                  width:100%;
+              }
+          }
+      }
+
+    }
+    .signup_cta{
+        position:relative;
+        top:5vh;
+        width:235px;
+        height: auto;
+        margin:auto;
+        display:block;
+        button{
+          text-transform: capitalize !important;
+          letter-spacing: 1px;
+        
+        }
+       
+
+        button.signup-email{
+          position: absolute;
+          width: 100%;
+          bottom: 85%;
+        }
+        button.signup-fb{
+          position: absolute;
+          width: 100%;
+          top:60px;
+        }
+        p{
+          color: #fff;
+          text-align: center;
+          font-family: "roboto";
+          letter-spacing: 1px;
+          position: relative;
+          top: 115px;
+          span{
+            color:#73C1BB;
+            margin-left:5px;
+          }
+        }  
+    }
+    
+}
+
+.separator {
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  position: relative;
+  top: 85px;
+  color:rgba(255,255,255,0.5);
+}
+
+.separator:after,
+.separator:before {
+    content: "";
+    display: block;
+    background: rgba(255,255,255,0.5);
+    width: 30%;
+    height:1px;
+    margin: 0 10px;
+}

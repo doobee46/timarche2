@@ -1,0 +1,157 @@
+ion-header{
+    ion-toolbar{
+        ion-buttons{
+            img.logo{
+            width: 25px;
+            }
+        }
+    }
+  .location{
+    ion-button{
+      span{
+        button{
+        text-transform: capitalize !important;
+        border-radius: 5px;
+        letter-spacing: 1px;
+        font-size: 12px;
+        font-family: "roboto";
+
+        }
+        button.btn-text{
+          letter-spacing: 1px;
+          font-size: 11px !important;
+          font-family: "roboto";
+          text-transform: uppercase;
+        }
+      }
+    } 
+  }    
+}
+
+.main-content{
+    background-color:#D7DAE5 !important;
+    ion-card {
+    position: relative;
+    text-align: center;
+    img{
+      height: 230px !important;
+    }
+  }
+
+  .image-bar{
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color:#7a85C9;
+
+  }
+
+   .list-image::after{
+    display: block;
+    position:relative;
+    background: #000;
+    background: linear-gradient(top, rgba(0,0,0,0) 0,#000 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff', endColorstr='#000',GradientType=0 );
+    margin-top:-195px;
+    height: 195px;
+    width: 100%;
+    opacity: .8;
+    content:'';
+  }
+  .card-title {
+      position:absolute;
+      bottom:20%;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #fff;
+      padding: 15px;
+      @include truncate;
+      font-family:"roboto";
+      text-transform: capitalize;
+      letter-spacing: 1px;
+
+  }
+
+  .card-subtitle {
+      font-size: 1em;
+      position: absolute;
+      bottom: 12%; 
+      color: #fff;
+      padding: 15px;
+      margin-right: 3px;
+      letter-spacing: 1px;
+      font-size:14px;
+      text-transform: capitalize;
+  }
+
+ /* .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight:bold;
+    font-size: 26px;
+    color: #fff;
+    @include truncate;
+    font-family:"roboto";
+    text-transform: capitalize;
+
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+    .btn-txt{
+        border-radius:5px !important;
+        letter-spacing: 1px;
+        font-family: "roboto";
+        font-weight: bold;
+        font-size: 14px;
+    }
+  }*/
+
+  .flag{
+    position: absolute;
+    bottom:80%;
+    display: block;
+    padding: 8px 20px;
+    background:#73C1BB;
+    letter-spacing: 1px;
+    text-transform:uppercase;
+    font-family: "roboto";
+    color:#fff;
+    border-radius:0px 20px 20px 0px;
+    /*box-shadow: 1px 2px 3px #ccc;*/
+  }
+
+  .views{
+    position:absolute;
+    bottom:7%;
+    left:4%;
+    z-index: 100;
+    font-family: "Roboto";
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color:#fff;
+
+  }
+
+  button.btn-star{
+    position:absolute;
+    z-index: 100;
+    bottom:8%;
+    right: 5%;
+  }
+ 
+}
+
+
+.searchbar-md .searchbar-input{
+  border-radius:25px !important;
+}
+
+

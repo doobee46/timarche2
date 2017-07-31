@@ -98,11 +98,15 @@ export class MainPage {
             this.category = val.id;
             this.categoryName = val.name;
 
-            this.backand.query.post("getRelatedListings", {
-              "category_id": this.category
-            })
-            .then(data => { })
-            .catch(error => { })
+            this.backand.query.post('getRelatedListings', {
+                "category_id": this.category
+              })
+            .then((res: any) => {
+              this.listings = res.data;
+            },
+            (err: any) => {
+              alert(err.data);
+            });
 
           });
 

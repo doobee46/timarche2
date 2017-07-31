@@ -7,7 +7,7 @@ import { UploadformPage } from '../uploadform/uploadform';
 import { Storage } from '@ionic/storage';
 import { LocationComponent } from '../../components/location/location';
 import { ListingDetailsPage } from '../listing-details/listing-details';
-
+import { BackandService } from '@backand/angular2-sdk';
 
 import 'rxjs/add/operator/map';
 
@@ -20,72 +20,89 @@ export class MainPage {
 
   public listings:any[] = [];
   category:any;
+  deep:any;
   categoryName:string ="Electronic";
   favorites = [];
   selectedCity:string="Delmas";
-  products = [
-  {
-    id:1,
-    title: 'ac',
-    description:"brand new ac with remote control",
-    price:10000,
-    views:1000,
-    flag: false
-  }, 
-  {
-    id:2,
-    title: 'car',
-    description:"Car with 150k miles , runs great, recently services.",
-    price:250000,
-    views:15000,
-    flag: true
-  },
-  {
-    id:3,
-    title: 'headphone',
-    description:"brand new beat on wirelles",
-    price:5000,
-    views:220,
-    flag: true
-  },
-  {
-    id:4,
-    title: 'computer',
-    description:"250Gb hd , 2GB ram,starter laptop for freshman",
-    price:25000,
-    views:2000,
-    flag: false
-  }]
 
-  constructor(public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
+  constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
   public navCtrl: NavController,
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
-  }
+    //this.getListings();
+
+   /* this.backand.object.on("items_updated")
+      .subscribe(
+          data => {
+              console.log("items_updated", data);
+              let a = data as any[];
+              let newItem = {};
+              a.forEach((kv)=> newItem[kv.Key] = kv.Value);
+              this.listings.unshift(newItem);
+          },
+          err => {
+              console.log(err);
+          },
+          () => console.log('received update from socket')
+    );*/
+
+  let loader = this.loadingCtrl.create({
+        content: 'Getting Listings...',
+  })
+
+  loader.present().then(() => {
+
+    this.backand.object.getList('Listings')
+    .then((res: any) => {
+      this.listings = res.data;
+    },
+    (err: any) => {
+      alert(err.data);
+    });
+
+    this.storage.get('favorites').then((val) =>{
+      if(!val)
+        this.storage.set('favorites',this.favorites);
+      else
+        this.favorites = val;
+    })
+      
+    setTimeout(() => {
+      loader.dismiss();
+    }, 2000);
+  }); 
+
+}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MainPage');
   }
 
-    
-browseCategory() {
+      
+ browseCategory() {
 
- let myModal = this.modalCtrl.create(CategoryPage);
+    let myModal = this.modalCtrl.create(CategoryPage);
 
-    myModal.onDidDismiss(category => {
+    myModal.onDidDismiss(genre => {
 
       let loader = this.loadingCtrl.create({
-        content: 'Getting Categories',
+        content: 'Getting Genres',
       });
 
-      if (category) {
+      if (genre) {
         loader.present().then(() => {
 
-        this.storage.get('category').then((val) => {
+          this.storage.get('category').then((val) => {
 
             this.category = val.id;
             this.categoryName = val.name;
+
+            this.backand.query.post("getRelatedListings", {
+              "category_id": this.category
+            })
+            .then(data => { })
+            .catch(error => { })
 
           });
 
@@ -102,7 +119,19 @@ browseCategory() {
 
   }
 
+public getListings() {
+   this.backand.object.getList('Listings')
+    .then((res: any) => {
+      this.listings = res.data;
+    },
+    (err: any) => {
+      alert(err.data);
+    });
+ }
 
+ public getCategory(category_id){
+    
+ }
   
 postListing() {
 
@@ -186,7 +215,7 @@ postListing() {
       if (val.length != 0)
         this.favorites
       else
-        this.products.length = 0;
+        this.listings.length = 0;
 
     })
 

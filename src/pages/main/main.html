@@ -35,37 +35,37 @@
 
 <ion-content class="main-content" >
  <div class="main-table">
-  <ion-card *ngFor="let product of products">
+  <ion-card *ngFor="let listing of listings">
     <div class="image-bar"></div>
     <div class="list-image">
-      <img src= 'assets/img/{{product.title}}.jpg' />
+      <img src= 'assets/img/headphone.jpg' />
     </div>
 
-    <div class="card-title" (click)="showDetails(product.id,product.title,product.description,product.views,product.flag)">{{product.title}}</div>
+    <div class="card-title" (click)="showDetails(listing.id,listing.title,listing.description,listing.views,listing.flag)">{{listing.title}}</div>
     
     <div class="card-subtitle">     
-      {{product.price}} gdes   
+      {{listing.price}} gdes   
     </div>
 
-    <div class="flag" *ngIf="product.flag === true">
+    <div class="flag" *ngIf="listing.flag === true">
       New
     </div>
 
     <div class="views">
       <ion-icon name ="eye"></ion-icon>
-      {{product.views}} views
+      {{listing.views}} views
     </div>
 
-    <div *ngIf="favorites.indexOf(product.id) == '-1'; then fav else remove"></div>
+    <div *ngIf="favorites.indexOf(listing.id) == '-1'; then fav else remove"></div>
 
     <ng-template #fav>
-      <button class ="btn-star" ion-button outline medium color="secondary" icon-only (click)="favs(product.id)">
+      <button class ="btn-star" ion-button outline medium color="secondary" icon-only (click)="favs(listing.id)">
         <ion-icon name ="bookmark"></ion-icon>
       </button>
     </ng-template>
 
     <ng-template #remove>
-      <button  class ="btn-star" ion-button medium color="dark-green" icon-only (click)="removeFavorite(product.id)">
+      <button  class ="btn-star" ion-button medium color="dark-green" icon-only (click)="removeFavorite(listing.id)">
         <ion-icon name='bookmark'color="secondary"></ion-icon>
       </button>
     </ng-template>

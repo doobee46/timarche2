@@ -30,6 +30,7 @@ export class MainPage {
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
+   
     //this.getListings();
 
    /* this.backand.object.on("items_updated")
@@ -203,7 +204,7 @@ postListing() {
      this.favorites = this.favorites.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
      this.storage.set('favorites',this.favorites);
      console.log(this.favorites);
-   }
+  }
 
    removeFavorite(id) {
     this.favorites = this.favorites.filter(function(item) {
@@ -212,12 +213,32 @@ postListing() {
     this.storage.set('favorites', this.favorites);
   }
 
-  openFavorites() {
+  public getFavorites(favs){
+    let favorites = favs
+        favorites = favorites.toString()
+    this.backand.query.post('getfavs',favorites)
+    .then(res => {
+      this.listings = res.data;
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+   
+  }
 
+  openFavorites() {
     this.storage.get('favorites').then((val) => {
      console.log(val);
       if (val.length != 0)
-        this.favorites
+        this.backand.query.get('getfavs',val.join())
+        .then(res => {
+          this.listings = res.data;
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
       else
         this.listings.length = 0;
 

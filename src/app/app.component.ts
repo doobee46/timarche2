@@ -22,7 +22,9 @@ export class MyApp {
   constructor(public menuCtrl:MenuController, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private backand:BackandService) {
     
     this.pages =[
-      {title: 'Browse', component: MainPage}
+      {title: 'Browse', component: MainPage},
+      {title: 'Notification', component: MainPage},
+      {title: 'Settings', component: MainPage}
     ];
 
     platform.ready().then(() => {

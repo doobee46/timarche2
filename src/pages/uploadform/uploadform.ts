@@ -5,6 +5,7 @@ import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { BackandService } from '@backand/angular2-sdk'
+import { CategoryPage } from '../category/category';
 
 declare var cordova: any;
 
@@ -23,12 +24,14 @@ export class UploadformPage {
   poster_url;
   user;
   category;
+  categories:any[] = [];
   location;
   public listings:any[] = [];
 
   constructor(private backand:BackandService,public viewCtrl:ViewController,public navCtrl: NavController, public navParams: NavParams,private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath,
   public actionSheetCtrl: ActionSheetController,public toastCtrl: ToastController,public platform: Platform) {
-  }
+   this.getCategories();
+ }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadformPage');
@@ -171,5 +174,15 @@ public postNewListing() {
       });
     }
   }
+
+  public getCategories() {
+   this.backand.object.getList('categories')
+    .then((res: any) => {
+      this.categories = res.data;
+    },
+    (err: any) => {
+      alert(err.data);
+    });
+ }
 
 }

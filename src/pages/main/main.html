@@ -17,7 +17,7 @@
   </ion-toolbar>
   <ion-toolbar class="location" color="snowish">
     <button ion-button clear icon-right color="secondary" (click)="browseCategory()">
-       Browse Category<!-- {{categoryName | uppercase}}-->
+       {{categoryName | uppercase}}
       <ion-icon name="arrow-dropdown"></ion-icon>
     </button>
     <ion-buttons end>
@@ -25,7 +25,7 @@
         <ion-icon name="bookmark"></ion-icon>
         Favs
       </button>
-      <button ion-button clear color="secondary" icon-right (click)="openLocation($event)" class="btn-txt">
+      <button ion-button color="secondary" icon-right (click)="openLocation($event)" class="btn-txt">
           {{selectedCity}}
         <ion-icon class="drop" name="arrow-dropdown"></ion-icon>
       </button>

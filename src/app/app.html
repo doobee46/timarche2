@@ -24,6 +24,7 @@
    <ion-list inset class="side-list">    
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)" class="side-menu">
         {{p.title}}
+        <ion-badge item-end *ngIf="p.title === 'Notification'" >2</ion-badge>
       </button>
       <!--<button  (click)="addToPlaylist()" class="listbtn" ion-item>
        Playlists

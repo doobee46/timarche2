@@ -4,9 +4,6 @@
       Product Listing form
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-left (click)="presentActionSheet()">
-        <ion-icon name="camera"></ion-icon>
-      </button>
       <button ion-button icon-only (click)="closeModal()">
         <ion-icon item-right name="ios-close-outline"></ion-icon>
       </button>
@@ -15,14 +12,16 @@
 </ion-header>
  
 <ion-content padding>
-    <ion-list>
-        <ion-item>
-           Publish a listing
-        </ion-item>
-         
+  <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
+  <h3 [hidden]="lastImage !== null"></h3>
+   <button ion-button clear (click)="presentActionSheet()">
+      <ion-icon name="camera"></ion-icon>
+       Select image
+    </button>
+    <ion-list>           
         <ion-item>
            <ion-label fixed>Name</ion-label>
-            <ion-input type="text" [value]="name" (input)="name = $event.target.value"></ion-input>
+            <ion-input type="textarea" [value]="name" (input)="name = $event.target.value"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -33,12 +32,23 @@
             <ion-label fixed>Price</ion-label>
             <ion-input type="text" [value]="price" (input)="price= $event.target.value"></ion-input>
         </ion-item>
-        
+        <ion-item>
+          <ion-label>Category</ion-label>
+          <ion-select [(ngModel)]="Category">
+            <ion-option *ngFor="let category of categories" value="{{category.title}}">{{category.title}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Location</ion-label>
+          <ion-select [(ngModel)]="gender">
+            <ion-option value="f">Female</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-input [hidden]="true" ></ion-input><!--fix to ion-list long border-bottom-->
     </ion-list>
 
-  <button ion-button (click)="postNewListing" color="warning">Post Item</button>
-  <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
-  <h3 [hidden]="lastImage !== null">Please Select Image!</h3>
+  <button ion-button full (click)="postNewListing" color="secondary">Post Item</button>
+  
 </ion-content>
  
 <ion-footer>

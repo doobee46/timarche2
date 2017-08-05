@@ -30,6 +30,7 @@ export class MainPage {
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
+    this.categoryName;
    
     //this.getListings();
 
@@ -49,18 +50,30 @@ export class MainPage {
     );*/
 
   let loader = this.loadingCtrl.create({
-        content: 'Getting Listings...',
+       spinner: 'dots'
   })
 
   loader.present().then(() => {
 
-    this.backand.object.getList('Listings')
-    .then((res: any) => {
-      this.listings = res.data;
-    },
-    (err: any) => {
-      alert(err.data);
-    });
+      this.storage.get('category').then((val) => {
+        if (val) {
+          this.category = val.id;
+          this.categoryName = val.name;
+        } else {
+          this.category = 1;
+          this.categoryName = 'Electronic';
+          this.storage.set('category', this.category);
+        }
+
+        this.backand.object.getList('Listings')
+          .then((res: any) => {
+            this.listings = res.data;
+          },
+          (err: any) => {
+            alert(err.data);
+          });
+
+      });
 
     this.storage.get('favorites').then((val) =>{
       if(!val)
@@ -88,7 +101,7 @@ export class MainPage {
     myModal.onDidDismiss(genre => {
 
       let loader = this.loadingCtrl.create({
-        content: 'Getting Genres',
+       spinner: 'dots'
       });
 
       if (genre) {

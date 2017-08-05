@@ -155,4 +155,9 @@ ion-header{
   border-radius:25px !important;
 }
 
-
+.popover-content{
+    top: 110px !important;
+    left: 220px;
+    transform-origin: right top 0px;
+    transform: scale(1);
+}

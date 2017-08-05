@@ -11,6 +11,7 @@ import { BackandService } from '@backand/angular2-sdk';
 export class CategoryPage {
  /* categories:Array<any>;*/
   categories:any[] = []
+  categoryName;
 
   currentCategory: any;
   constructor(private backand:BackandService,public viewCtrl:ViewController,private storage: Storage,public navCtrl: NavController, public navParams: NavParams) {

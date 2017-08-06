@@ -24,6 +24,7 @@ export class MainPage {
   categoryName:string ="Electronic";
   favorites = [];
   selectedCity:string="Delmas";
+  searchQuery: string;
 
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
   public navCtrl: NavController,
@@ -32,22 +33,16 @@ export class MainPage {
     this.selectedCity = "Delmas";
     this.categoryName;
    
-    //this.getListings();
-
-   /* this.backand.object.on("items_updated")
-      .subscribe(
-          data => {
-              console.log("items_updated", data);
-              let a = data as any[];
-              let newItem = {};
-              a.forEach((kv)=> newItem[kv.Key] = kv.Value);
-              this.listings.unshift(newItem);
-          },
-          err => {
-              console.log(err);
-          },
-          () => console.log('received update from socket')
-    );*/
+    this.searchQuery = '';
+    let that = this;
+    this.backand.on("items_updated",
+      (res: any) => {
+        let a = res as any[];
+        let newItem = {};
+        a.forEach((kv)=> newItem[kv.Key] = kv.Value);
+        that.listings.unshift(newItem);
+      }
+    );
 
   let loader = this.loadingCtrl.create({
        spinner: 'dots'
@@ -257,6 +252,33 @@ postListing() {
 
     })
 
+  }
+
+  public filterItems() {
+    // set q to the value of the searchbar
+    var q = this.searchQuery;
+
+    // if the value is an empty string don't filter the items
+    if (!q || q.trim() == '') {
+      return;
+    }
+    else{
+        q = q.trim();
+    }
+
+    let params = {
+      filter: [
+        this.backand.helpers.filter.create('title', this.backand.helpers.filter.operators.text.contains, q),
+      ],
+    }
+
+    this.backand.object.getList('Listings', params)
+    .then((res: any) => {
+      this.listings = res.data;
+    },
+    (err: any) => {
+      alert(err.data);
+    });
   }
 
 }

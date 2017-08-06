@@ -16,16 +16,8 @@ import { BackandService } from '@backand/angular2-sdk';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage;
-  pages: Array<{title: string, component: any}>;
-  auth_status:string = null;
-
-  constructor(public menuCtrl:MenuController, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private backand:BackandService) {
-    
-    this.pages =[
-      {title: 'Browse', component: MainPage},
-      {title: 'Notification', component: MainPage},
-      {title: 'Settings', component: MainPage}
-    ];
+  
+  constructor(public menuCtrl:MenuController,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private backand:BackandService) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -42,15 +34,5 @@ export class MyApp {
       this.rootPage = SignupPage;
     });
   }
-   public signOut() {
-    this.auth_status = null;
-    this.backand.signout();
-    this.menuCtrl.close();
-    this.nav.push(LoginPage);
-  }
-  
-  openPage(page){
-    this.nav.push(page.component);
-    this.menuCtrl.close();
-  }
+
 }

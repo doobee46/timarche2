@@ -4,6 +4,7 @@ LoadingController,ActionSheetController,MenuController,
 Platform,ModalController,PopoverController  } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { UploadformPage } from '../uploadform/uploadform';
+import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { LocationComponent } from '../../components/location/location';
 import { ListingDetailsPage } from '../listing-details/listing-details';
@@ -17,6 +18,9 @@ import 'rxjs/add/operator/map';
 })
 export class MainPage {
   @ViewChild(Content) content: Content;
+ 
+  pages: Array<{title: string, component: any}>;
+  auth_status:string = null;
 
   public listings:any[] = [];
   category:any;
@@ -25,10 +29,19 @@ export class MainPage {
   favorites = [];
   selectedCity:string="Delmas";
   searchQuery: string;
+  currentUser:string;
 
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
   public navCtrl: NavController,
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
+
+    this.pages =[
+      {title: 'Browse', component: MainPage},
+      {title: 'Notification', component: MainPage},
+      {title: 'Settings', component: MainPage}
+    ];
+    
+    this.currentUser = this.navParams.get('loggedInUser');
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
     this.categoryName;
@@ -84,12 +97,12 @@ export class MainPage {
 
 }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MainPage');
-  }
+ionViewDidLoad() {
+  console.log('ionViewDidLoad MainPage');
+}
 
       
- browseCategory() {
+browseCategory() {
 
     let myModal = this.modalCtrl.create(CategoryPage);
 
@@ -130,7 +143,7 @@ export class MainPage {
 
     myModal.present();
 
-  }
+}
 
 public getListings() {
    this.backand.object.getList('Listings')
@@ -142,10 +155,8 @@ public getListings() {
     });
  }
 
- public getCategory(category_id){
-    
- }
-  
+
+
 postListing() {
 
  let myModal = this.modalCtrl.create(UploadformPage);
@@ -179,10 +190,7 @@ postListing() {
 
   }
 
-
-/*  public post(){
-    this.navCtrl.push(UploadformPage);
-  }*/
+  public
 
 
   openLocation(ev) {
@@ -224,11 +232,6 @@ postListing() {
   public getFavorites(favs){
      let favorites = favs
      favorites = favorites.join();
-   /*   let params = {
-      filter: [
-        this.backand.helpers.filter.create('id', this.backand.helpers.filter.operators.text.equals, favorites),
-      ],
-    }*/
     this.backand.query.post("getfavs", {
       "params": favorites
     })
@@ -247,14 +250,6 @@ postListing() {
      console.log(val);
       if (val.length != 0)
        this.getFavorites(val);
-       /* this.backand.query.get('getfavs',val.join())
-        .then(res => {
-          this.listings = res.data;
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });*/
       else
         this.listings.length = 0;
 
@@ -287,6 +282,18 @@ postListing() {
     (err: any) => {
       alert(err.data);
     });
+  }
+
+  public signOut() {
+    this.auth_status = null;
+    this.backand.signout();
+    this.menuCtrl.close();
+    this.navCtrl.push(LoginPage);
+  }
+  
+  openPage(page){
+    this.navCtrl.push(page.component);
+    this.menuCtrl.close();
   }
 
 }

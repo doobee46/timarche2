@@ -1,7 +1,7 @@
 import { NavController, NavParams,MenuController } from 'ionic-angular';
 import { SignupPage }from "../signup/signup";
 import { MainPage } from "../main/main";
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 // import {bootstrap} from '@angular/platform-browser-dynamic';
 import 'rxjs/Rx'
 import { BackandService } from '@backand/angular2-sdk'
@@ -10,6 +10,8 @@ import { BackandService } from '@backand/angular2-sdk'
     templateUrl: 'login.html',
     selector: 'page-login',
 })
+
+
 export class LoginPage {
 
   username:string = 'user1@example.com';
@@ -51,7 +53,10 @@ export class LoginPage {
         this.loggedInUser = res.data.username;
         this.username = '';
         this.password = '';
-        this.navCtrl.setRoot(MainPage);
+        this.navCtrl.setRoot(MainPage,{
+            loggedInUser: this.loggedInUser,
+        });
+        
       },
       (error: any) => {
         let errorMessage: string = error.data.error_description;

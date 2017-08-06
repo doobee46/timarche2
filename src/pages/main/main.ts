@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { LocationComponent } from '../../components/location/location';
 import { ListingDetailsPage } from '../listing-details/listing-details';
+import { md5 } from 'crypto-md5';
 import { BackandService } from '@backand/angular2-sdk';
 
 import 'rxjs/add/operator/map';
@@ -21,6 +22,7 @@ export class MainPage {
  
   pages: Array<{title: string, component: any}>;
   auth_status:string = null;
+  profilePicture: any = "https://www.gravatar.com/avatar/"
 
   public listings:any[] = [];
   category:any;
@@ -30,6 +32,7 @@ export class MainPage {
   selectedCity:string="Delmas";
   searchQuery: string;
   currentUser:string;
+  email:string;
 
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
   public navCtrl: NavController,
@@ -42,10 +45,12 @@ export class MainPage {
     ];
     
     this.currentUser = this.navParams.get('loggedInUser');
+    this.email = this.navParams.get('loggedInUser');
+
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
     this.categoryName;
-   
+     
     this.searchQuery = '';
     let that = this;
     this.backand.on("items_updated",
@@ -156,7 +161,6 @@ public getListings() {
  }
 
 
-
 postListing() {
 
  let myModal = this.modalCtrl.create(UploadformPage);
@@ -189,9 +193,6 @@ postListing() {
     myModal.present();
 
   }
-
-  public
-
 
   openLocation(ev) {
     let popover = this.popoverCtrl.create(LocationComponent, {
@@ -295,5 +296,6 @@ postListing() {
     this.navCtrl.push(page.component);
     this.menuCtrl.close();
   }
+
 
 }

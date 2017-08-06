@@ -14,9 +14,9 @@
 <ion-content padding>
   <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
   <h3 [hidden]="lastImage !== null"></h3>
-   <button ion-button clear (click)="presentActionSheet()">
-      <ion-icon name="camera"></ion-icon>
-       Select image
+   <button ion-button clear color="dark" (click)="presentActionSheet()">
+      <ion-icon name="camera"> Select Image</ion-icon>
+       <!--Select image-->
     </button>
     <ion-list>           
         <ion-item>
@@ -47,7 +47,9 @@
         <ion-input [hidden]="true" ></ion-input><!--fix to ion-list long border-bottom-->
     </ion-list>
 
-  <button ion-button full (click)="postNewListing" color="secondary">Post Item</button>
+  <button ion-button round (click)="postNewListing" color="primary">
+     <ion-icon name="cloud-upload"> Post Listing</ion-icon>
+  </button>
   
 </ion-content>
  

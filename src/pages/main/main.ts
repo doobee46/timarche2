@@ -222,16 +222,23 @@ postListing() {
   }
 
   public getFavorites(favs){
-    let favorites = favs
-        favorites = favorites.toString()
-    this.backand.query.post('getfavs',favorites)
+     let favorites = favs
+     favorites = favorites.join();
+   /*   let params = {
+      filter: [
+        this.backand.helpers.filter.create('id', this.backand.helpers.filter.operators.text.equals, favorites),
+      ],
+    }*/
+    this.backand.query.post("getfavs", {
+      "params": favorites
+    })
     .then(res => {
       this.listings = res.data;
       console.log(res.data);
     })
     .catch(err => {
       console.log(err);
-    });
+    });   
    
   }
 
@@ -239,14 +246,15 @@ postListing() {
     this.storage.get('favorites').then((val) => {
      console.log(val);
       if (val.length != 0)
-        this.backand.query.get('getfavs',val.join())
+       this.getFavorites(val);
+       /* this.backand.query.get('getfavs',val.join())
         .then(res => {
           this.listings = res.data;
           console.log(res.data);
         })
         .catch(err => {
           console.log(err);
-        });
+        });*/
       else
         this.listings.length = 0;
 

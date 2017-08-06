@@ -17,7 +17,7 @@
   </ion-toolbar>
   <ion-toolbar class="location" color="snowish">
     <button ion-button clear icon-right color="secondary" (click)="browseCategory()">
-       {{categoryName | uppercase}}
+      Browse Category<!-- {{categoryName | uppercase}}-->
       <ion-icon name="arrow-dropdown"></ion-icon>
     </button>
     <ion-buttons end>
@@ -34,6 +34,9 @@
 </ion-header>
 
 <ion-content class="main-content" >
+ <div class="no-listing" *ngIf="listings.length === 0" padding>
+   <p class="miss-list">Oops!!! no listings yet for that category .check back later</p>
+ </div>
  <div class="main-table">
   <ion-card *ngFor="let listing of listings">
     <div class="image-bar"></div>

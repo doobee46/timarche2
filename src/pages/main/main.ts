@@ -1,7 +1,7 @@
 import { ViewChild,Component } from '@angular/core';
 import { NavController,Content,NavParams,Events,
 LoadingController,ActionSheetController,MenuController,
-Platform,ModalController,PopoverController  } from 'ionic-angular';
+Platform,ModalController,PopoverController,ToastController  } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
 import { UploadformPage } from '../uploadform/uploadform';
 import { LoginPage } from '../login/login';
@@ -35,12 +35,13 @@ export class MainPage {
   email:string;
 
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
-  public navCtrl: NavController,
+  public navCtrl: NavController,public toastCtrl: ToastController,
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
 
     this.pages =[
       {title: 'Browse', component: MainPage},
       {title: 'Notification', component: MainPage},
+      {title: 'My Listings', component: MainPage},
       {title: 'Settings', component: MainPage}
     ];
     
@@ -104,6 +105,15 @@ export class MainPage {
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad MainPage');
+}
+
+private presentToast(text) {
+  let toast = this.toastCtrl.create({
+    message: text,
+    duration: 3000,
+    position: 'top'
+  });
+  toast.present();
 }
 
       
@@ -220,6 +230,7 @@ postListing() {
      this.favorites.push(id);
      this.favorites = this.favorites.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
      this.storage.set('favorites',this.favorites);
+     this.presentToast('Listings added to favorites.')
      console.log(this.favorites);
   }
 
@@ -228,6 +239,7 @@ postListing() {
       return item !== id
     });
     this.storage.set('favorites', this.favorites);
+    this.presentToast('Listings removed from favorites.');
   }
 
   public getFavorites(favs){

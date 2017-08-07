@@ -29,7 +29,7 @@ export class UploadformPage {
   public listings:any[] = [];
 
   constructor(private backand:BackandService,public viewCtrl:ViewController,public navCtrl: NavController, public navParams: NavParams,private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath,
-  public actionSheetCtrl: ActionSheetController,public toastCtrl: ToastController,public platform: Platform) {
+  public actionSheetCtrl: ActionSheetController, public loadingCtrl:LoadingController,public toastCtrl: ToastController,public platform: Platform) {
    this.getCategories();
  }
 
@@ -146,7 +146,6 @@ public postNewListing() {
       location:this.location
   };
 
-    if (listing.title && listing.description) {
       this.backand.object.create('Listings', listing)
       .then((res: any) => {
         // add to beginning of array
@@ -158,7 +157,8 @@ public postNewListing() {
         poster_url:this.poster_url,
         user:this.user,
         category:this.category,
-        location:this.location });
+        location:this.location,
+         });
 
         this.title= '';
         this.description = '';
@@ -172,8 +172,46 @@ public postNewListing() {
       (err: any) => {
         alert(err.data);
       });
-    }
   }
+
+  public uploadImage() {
+  // Destination URL
+  var url = "https://api.cloudinary.com/v1_1/doobee46/auto/upload";
+ 
+  // File for Upload
+  var targetPath = this.pathForImage(this.lastImage);
+ 
+  // File name only
+  var filename = this.lastImage;
+ 
+  var options = {
+    fileKey: "file",
+    fileName: filename,
+    chunkedMode: false,
+    mimeType: "multipart/form-data",
+    params : {'fileName': filename,
+              'upload_preset': 'cxgjr10k'
+    } 
+  };
+ 
+  const fileTransfer: TransferObject = this.transfer.create();
+ 
+  this.loading = this.loadingCtrl.create({
+    content: 'Uploading...',
+  });
+  this.loading.present();
+ 
+  // Use the FileTransfer to upload the image
+  fileTransfer.upload(targetPath, url, options).then(data => {
+    this.poster_url= data[url]
+    console.log(this.poster_url);
+    this.loading.dismissAll()
+    this.presentToast('Image succesful uploaded.');
+  }, err => {
+    this.loading.dismissAll()
+    this.presentToast('Error while uploading file.');
+  });
+}
 
   public getCategories() {
    this.backand.object.getList('categories')

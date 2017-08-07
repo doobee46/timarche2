@@ -84,12 +84,25 @@
  <div class="no-listing" *ngIf="listings.length === 0" padding>
    <p class="miss-list">Oops!!! no listings yet for that category .check back later</p>
  </div>
- <div class="main-table">
+ <div class="main-table" *ngIf="listings">
   <ion-card *ngFor="let listing of listings">
-    <div class="image-bar"></div>
-    <div class="list-image">
-      <img src= 'assets/img/headphone.jpg' />
-    </div>
+
+    <div *ngIf="listing.poster_url; then poster else noposter"></div>
+
+      <ng-template #poster>
+        <div class="image-bar"></div>
+        <div class="list-image">
+          <img [src]=listing.poster_url />
+        </div>
+      </ng-template>
+
+      <ng-template #noposter>
+        <div class="image-bar"></div>
+        <div class="list-image">
+          <img src="assets/img/blank.png" />
+        </div>
+      </ng-template>
+    
 
     <div class="card-title" (click)="showDetails(listing.id,listing.title,listing.description,listing.views,listing.flag)">{{listing.title}}</div>
     

@@ -14,7 +14,7 @@ import { BackandService } from '@backand/angular2-sdk';
 //   template: `<h1>Hello World!</h1>`
 // })
 export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+  auth_status:string = null;
   rootPage;
   
   constructor(public menuCtrl:MenuController,platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private backand:BackandService) {
@@ -35,4 +35,7 @@ export class MyApp {
     });
   }
 
+  
 }
+
+ 

@@ -61,6 +61,7 @@ ion-header{
   }
   .card-title {
       position:absolute;
+      left:-5px;
       bottom:20%;
       font-size: 1.5em;
       font-weight: bold;
@@ -85,35 +86,6 @@ ion-header{
       font-size:14px;
       text-transform: capitalize;
   }
-
- /* .card-title {
-    position: absolute;
-    top: 36%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight:bold;
-    font-size: 26px;
-    color: #fff;
-    @include truncate;
-    font-family:"roboto";
-    text-transform: capitalize;
-
-  }
-
-  .card-subtitle {
-    font-size: 1.0em;
-    position: absolute;
-    top: 52%;
-    width: 100%;
-    color: #fff;
-    .btn-txt{
-        border-radius:5px !important;
-        letter-spacing: 1px;
-        font-family: "roboto";
-        font-weight: bold;
-        font-size: 14px;
-    }
-  }*/
 
   .flag{
     position: absolute;
@@ -161,4 +133,12 @@ ion-header{
     left: 220px;
     transform-origin: right top 0px;
     transform: scale(1);
+}
+
+.toast{
+  text-align: center;
+  letter-spacing: 1px;
+  font-family: "roboto";
+  font-size:12px;
+  border-radius: 50%;
 }

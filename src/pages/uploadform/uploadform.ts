@@ -22,15 +22,19 @@ export class UploadformPage {
   price;
   flag;
   poster_url;
-  user;
   category;
   categories:any[] = [];
   location;
+  user;
+  api_url:any ="https://api.cloudinary.com/v1_1/doobee46/auto/upload";
   public listings:any[] = [];
+ 
 
   constructor(private backand:BackandService,public viewCtrl:ViewController,public navCtrl: NavController, public navParams: NavParams,private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath,
   public actionSheetCtrl: ActionSheetController, public loadingCtrl:LoadingController,public toastCtrl: ToastController,public platform: Platform) {
    this.getCategories();
+   this.user = this.navParams.get('user');
+   console.log(this.user);
  }
 
   ionViewDidLoad() {
@@ -134,20 +138,20 @@ closeModal() {
     this.navCtrl.pop();
 }
 
-public postNewListing() {
-  let listing = {
-      title: this.title,
-      description : this.description,
-      price:this.price,
-      flag:this.flag,
-      poster_url:this.poster_url,
-      user:this.user,
-      category:this.category,
-      location:this.location
-  };
 
-      this.backand.object.create('Listings', listing)
-      .then((res: any) => {
+public postNewListing() {
+  this.backand.object.create('Listings',
+      { 
+        title: this.title,
+        description :this.description,
+        price:this.price,
+        flag:this.flag,
+        poster_url:this.poster_url,
+        user:this.user,
+        category:this.category,
+        location:this.location 
+      
+      }).then((res: any) => {
         // add to beginning of array
         this.listings.unshift({ id: null, 
         title: this.title, 
@@ -160,23 +164,25 @@ public postNewListing() {
         location:this.location,
          });
 
-        this.title= '';
-        this.description = '';
-        this.price='';
-        this.flag='';
-        this.poster_url='';
-        this.user= '';
-        this.category = '';
-        this.location ='';
-      },
-      (err: any) => {
+          this.title= '';
+          this.description = '';
+          this.price='';
+          this.flag='';
+          this.poster_url='';
+          this.user= this.user;
+          this.category = '';
+          this.location ='';
+        },
+        (err: any) => {
         alert(err.data);
-      });
+      }
+    );
   }
+
 
   public uploadImage() {
   // Destination URL
-  var url = "https://api.cloudinary.com/v1_1/doobee46/auto/upload";
+  var url = this.api_url;
  
   // File for Upload
   var targetPath = this.pathForImage(this.lastImage);
@@ -203,7 +209,6 @@ public postNewListing() {
  
   // Use the FileTransfer to upload the image
   fileTransfer.upload(targetPath, url, options).then(data => {
-    this.poster_url= data[url]
     console.log(this.poster_url);
     this.loading.dismissAll()
     this.presentToast('Image succesful uploaded.');

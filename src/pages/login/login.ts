@@ -14,16 +14,16 @@ import { BackandService } from '@backand/angular2-sdk'
 
 export class LoginPage {
 
-  username:string = 'user1@example.com';
+  username:string = 'user3@example.com';
   password:string = 'password';
   auth_type:string = "N/A";
   is_auth_error:boolean = false;
   auth_status:string = null;
   loggedInUser: string = '';
-
   oldPassword: string = '';
   newPassword: string = '';
   confirmNewPassword: string = '';
+  user_id;
 
   constructor(public menuCtrl: MenuController,private backand: BackandService,public navCtrl: NavController, public navParams: NavParams) {
     this.menuCtrl.enable(false);
@@ -33,6 +33,7 @@ export class LoginPage {
           this.loggedInUser = res.data.username;
           this.auth_status = 'OK';
           this.auth_type = res.data.token_type == 'Anonymous' ? 'Anonymous' : 'Token';
+        
         }
       },
       (err: any) => {
@@ -52,11 +53,13 @@ export class LoginPage {
         this.is_auth_error = false;
         this.loggedInUser = res.data.username;
         this.username = '';
-        this.password = '';
+        this.password = ''; 
+        this.user_id = res.data.userId
         this.navCtrl.setRoot(MainPage,{
             loggedInUser: this.loggedInUser,
+            user_id:this.user_id
         });
-        
+        console.log(this.user_id);
       },
       (error: any) => {
         let errorMessage: string = error.data.error_description;

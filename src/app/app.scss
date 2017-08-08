@@ -35,10 +35,13 @@
                 text-align: center !important;
                 letter-spacing: 1px !important;
                 font-size: 14px;
+                text-transform: capitalize;
+                font-family: "roboto"
             }
             h3.member{
               text-transform: capitalize;
               font-size:13px;
+              letter-spacing: 1px !important;
               
             }
         }
@@ -47,8 +50,9 @@
 }
 
 .side-menu{
+    background-color:transparent !important;
     .label{
-        text-align:center;
+        text-align:left;
         @include labeltext;
     }
 }
@@ -56,15 +60,18 @@
 .label{
     text-align: left;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 12px !important;
     letter-spacing: 1px;
+    color:#fff;
 }
 
 .side-list{
     position:relative;
     top:30%;
     button.listbtn ion-label{
-      text-align: center;
+      text-align: left;
+      letter-spacing: 1px;
+      font-size:12px;
     }
 }
 
@@ -79,6 +86,7 @@
       font-size: 14px;
       letter-spacing: 1px;
       text-transform: capitalize;
+
     }
     h3{
       color:#fff;

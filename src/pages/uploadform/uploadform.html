@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="secondary">
     <ion-title>
-      Product Listing form
+      List a Product
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="closeModal()">
@@ -14,7 +14,6 @@
 <ion-content padding>
   <img src="{{pathForImage(lastImage)}}" style="width: 100%" [hidden]="lastImage === null">
   <h3 [hidden]="lastImage !== null">
-     
     
     <button ion-button clear color="dark" (click)="presentActionSheet()">
       <ion-icon name="camera"> Select Image</ion-icon>
@@ -26,7 +25,7 @@
                          
         <ion-item>
            <ion-label fixed>title</ion-label>
-            <ion-input type="textarea" [value]="title" (input)="name = $event.target.value"></ion-input>
+            <ion-input type="text" [value]="title" (input)="title = $event.target.value"></ion-input>
         </ion-item>
 
         <ion-item>
@@ -40,7 +39,7 @@
         <ion-item>
           <ion-label>Category</ion-label>
           <ion-select [(ngModel)]="Category">
-            <ion-option *ngFor="let category of categories" value="{{category.title}}">{{category.title}}</ion-option>
+            <ion-option *ngFor="let category of categories" value="{{category.id}}">{{category.title}}</ion-option>
           </ion-select>
         </ion-item>
         <!--<ion-item>

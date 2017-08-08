@@ -1,5 +1,5 @@
 import { ViewChild,Component } from '@angular/core';
-import { NavController,Content,NavParams,Events,
+import { Nav,NavController,Content,NavParams,Events,
 LoadingController,ActionSheetController,MenuController,
 Platform,ModalController,PopoverController,ToastController  } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
@@ -8,7 +8,6 @@ import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { LocationComponent } from '../../components/location/location';
 import { ListingDetailsPage } from '../listing-details/listing-details';
-import { md5 } from 'crypto-md5';
 import { BackandService } from '@backand/angular2-sdk';
 
 import 'rxjs/add/operator/map';
@@ -18,6 +17,7 @@ import 'rxjs/add/operator/map';
   templateUrl: 'main.html',
 })
 export class MainPage {
+  @ViewChild(Nav) nav:Nav;
   @ViewChild(Content) content: Content;
  
   pages: Array<{title: string, component: any}>;
@@ -32,28 +32,27 @@ export class MainPage {
   selectedCity:string="Delmas";
   searchQuery: string;
   currentUser:string;
-  email:string;
-
+  user_id;
+ 
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
-  public navCtrl: NavController,public toastCtrl: ToastController,
+  public navCtrl: NavController,public toastCtrl: ToastController,private ev: Events,
   public navParams: NavParams,public actionSheetCtrl: ActionSheetController) {
-
+  
     this.pages =[
       {title: 'Browse', component: MainPage},
       {title: 'Notification', component: MainPage},
-      {title: 'My Listings', component: MainPage},
       {title: 'Settings', component: MainPage}
     ];
     
     this.currentUser = this.navParams.get('loggedInUser');
-    this.email = this.navParams.get('loggedInUser');
-
+    this.user_id = this.navParams.get('user_id')
     this.menuCtrl.enable(true);
     this.selectedCity = "Delmas";
     this.categoryName;
      
     this.searchQuery = '';
     let that = this;
+
     this.backand.on("items_updated",
       (res: any) => {
         let a = res as any[];
@@ -111,7 +110,8 @@ private presentToast(text) {
   let toast = this.toastCtrl.create({
     message: text,
     duration: 3000,
-    position: 'top'
+    position: 'top',
+    cssClass: 'toast'
   });
   toast.present();
 }
@@ -121,13 +121,13 @@ browseCategory() {
 
     let myModal = this.modalCtrl.create(CategoryPage);
 
-    myModal.onDidDismiss(genre => {
+    myModal.onDidDismiss(category => {
 
       let loader = this.loadingCtrl.create({
        spinner: 'dots'
       });
 
-      if (genre) {
+      if (category) {
         loader.present().then(() => {
 
           this.storage.get('category').then((val) => {
@@ -170,10 +170,12 @@ public getListings() {
     });
  }
 
+openModal() {
 
-postListing() {
-
- let myModal = this.modalCtrl.create(UploadformPage);
+ let myModal = this.modalCtrl.create(UploadformPage,{
+   user:this.user_id,
+  
+  });
 
    /* myModal.onDidDismiss(category => {
 
@@ -258,6 +260,20 @@ postListing() {
    
   }
 
+  public getUserListings(){
+    this.backand.query.post("userListings", {
+      "user_id": this.user_id
+    })
+    .then(res => {
+      this.listings = res.data;
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    }); 
+    this.menuCtrl.close();  
+  }
+
   openFavorites() {
     this.storage.get('favorites').then((val) => {
      console.log(val);
@@ -296,6 +312,7 @@ postListing() {
       alert(err.data);
     });
   }
+ 
 
   public signOut() {
     this.auth_status = null;
@@ -304,10 +321,10 @@ postListing() {
     this.navCtrl.push(LoginPage);
   }
   
+
   openPage(page){
     this.navCtrl.push(page.component);
     this.menuCtrl.close();
   }
-
 
 }

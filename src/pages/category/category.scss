@@ -1,6 +1,9 @@
 page-category {
    ion-content{
-       ion-list{
+       .category{
+           ion-label{
+               color:#73C1BB;
+           }
            button.modal{
                text-transform: capitalize !important;
                color:#73C1BB !important;

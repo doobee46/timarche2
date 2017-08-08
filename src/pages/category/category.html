@@ -9,7 +9,7 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-list class="category">
     <button ion-item class="modal" *ngFor="let category of categories" (click)="CategorySelected(category)">
       {{ category.title }}
       <ion-icon name="checkmark-circle" color="secondary" item-end *ngIf="category.id == currentCategory"></ion-icon>

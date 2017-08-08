@@ -22,8 +22,10 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      statusBar.backgroundColorByHexString('#54B4AC');
+       setTimeout(() => {
       splashScreen.hide();
+      }, 100);
       backand.init({
         appName: 'timarche',
         signUpToken: '805ea954-a27a-4749-9b14-61953d534631',

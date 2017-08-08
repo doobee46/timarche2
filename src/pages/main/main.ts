@@ -33,6 +33,7 @@ export class MainPage {
   searchQuery: string;
   currentUser:string;
   user_id;
+
  
   constructor(private backand:BackandService,public menuCtrl:MenuController,private storage: Storage,private popoverCtrl: PopoverController,public modalCtrl: ModalController,public loadingCtrl: LoadingController,public platform: Platform,
   public navCtrl: NavController,public toastCtrl: ToastController,private ev: Events,
@@ -327,4 +328,5 @@ openModal() {
     this.menuCtrl.close();
   }
 
+ 
 }

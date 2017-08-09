@@ -32,6 +32,7 @@ export class MainPage {
   selectedCity:string="Delmas";
   searchQuery: string;
   currentUser:string;
+  price:string;
   user_id;
 
  
@@ -219,13 +220,16 @@ openModal() {
     })
   }
 
-  public showDetails(id, title ,description,views, flag){
+
+  public showDetails(id, title ,description,views,flag,price){
    this.navCtrl.push(ListingDetailsPage,{
         id: id,
         title: title,
         description: description,
         views:views,
-        flag:flag
+        flag:flag,
+        price: price,
+        username:this.currentUser
     })
   }
 

@@ -11,6 +11,7 @@ import { CrudPage } from '../pages/crud/crud';
 import { MainPage } from '../pages/main/main';
 import { UploadformPage } from '../pages/uploadform/uploadform';
 import { CategoryPage } from '../pages/category/category';
+import { ChatsPage } from '../pages/chats/chats';
 import { ListingDetailsPage } from '../pages/listing-details/listing-details';
 import { LocationComponent } from '../components/location/location';
 import { File } from '@ionic-native/file';
@@ -41,7 +42,8 @@ import { FacebookModule } from 'ngx-facebook';
     CategoryPage,
     LocationComponent,
     ListingDetailsPage,
-    UploadformPage
+    UploadformPage,
+    ChatsPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +62,8 @@ import { FacebookModule } from 'ngx-facebook';
     CategoryPage,
     LocationComponent,
     ListingDetailsPage,
-    UploadformPage
+    UploadformPage,
+    ChatsPage
   ],
   providers: [ 
     StatusBar,

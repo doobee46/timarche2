@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ListingDetailsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { ChatsPage } from '../chats/chats';
 
 @Component({
   selector: 'page-listing-details',
@@ -18,6 +12,8 @@ export class ListingDetailsPage {
   public description;
   public views;
   public flag;
+  public username;
+  public price;
 
   images = ['car.jpg', 'computer.jpg', 'ac.jpg', 'headphone.jpg'];
 
@@ -27,12 +23,22 @@ export class ListingDetailsPage {
     this.description = navParams.get('description');
     this.views = navParams.get('views');
     this.flag=navParams.get('flag');
+    this.price=navParams.get('price');
+    this.username =navParams.get('username');
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListingDetailsPage');
    
+  }
+
+  openChat(){
+    this.navCtrl.push(ChatsPage,{
+      username : this.username,
+      title: this.title,
+      price: this.price
+    });
   }
 
 }

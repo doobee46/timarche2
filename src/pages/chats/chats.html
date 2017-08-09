@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+      {{username}}
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar color="light">
+    <h3>{{title}} - {{price}} gdes </h3>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div *ngFor="let data of messages">
+      <ion-item *ngIf="username === data.username" style="border-right: solid 5px red;">
+        <ion-avatar item-start>
+          <img src="assets/img/128.jpg">
+        </ion-avatar>
+        <p class="chat-text" item-left>
+          <strong>{{data.username}}: </strong>
+          {{data.message}}
+        </p>
+        <p class="chat-time" item-right>
+          {{data.date | date:'dd/MM/yyyy'}}
+        </p>
+      </ion-item>
+      <ion-item *ngIf="username !== data.username" style="border-right: solid 5px green;">
+        <p class="chat-text" item-left>
+          <strong>{{data.username}}: </strong>
+          {{data.message}}
+        </p>
+        <p class="chat-time" item-right>
+          {{data.date | date:'dd/MM/yyyy'}}
+        </p>
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <form #f="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col width-80>
+          <ion-input [(ngModel)]="chat" name="chatText" required placeholder="type here..."></ion-input>
+        </ion-col>
+        <ion-col width-20 center>
+          <button (click)="chatSend(f.value, f.valid)" ion-button color="primary" full round [disabled]="f.valid === false">send</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-footer>
